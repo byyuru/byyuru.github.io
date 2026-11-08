@@ -191,6 +191,20 @@ p {
     transition: padding-left 0.3s;
 }
 
+/* --- 服務項目：文字群組與補充小字 --- */
+.service-text-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px; /* 控制主標題與小字之間的間距 */
+}
+
+.service-sub {
+    font-size: 0.875rem; /* 讓小字比主標題小一點 (約 14px) */
+    color: var(--gray-dark); /* 使用你原本設定的次要文字顏色 */
+    font-weight: 400;
+    letter-spacing: -0.01em;
+}
+
 .service-item:hover .service-name {
     padding-left: 16px;
 }
