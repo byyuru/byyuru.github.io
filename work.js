@@ -1,4 +1,31 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // --- 1. 滑動底線邏輯 (Active Line) ---
+    const marker = document.getElementById('nav-marker');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    function indicator(e) {
+        // e 是當前的 HTML 元素
+        marker.style.left = e.offsetLeft + "px";
+        marker.style.width = e.offsetWidth + "px";
+    }
+
+    // 初始化：找到目前有 .active 的連結並移動線條
+    const activeLink = document.querySelector('.nav-links a.active');
+    if (activeLink && marker) {
+        indicator(activeLink);
+    }
+
+    // 點擊事件監聽
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            // 移除所有 active
+            navLinks.forEach(l => l.classList.remove('active'));
+            // 點擊的加上 active
+            e.currentTarget.classList.add('active');
+            // 移動線條
+            indicator(e.currentTarget);
+        });
+    });
     
     // --- 1. Update Year (自動更新年份) ---
     const yearEl = document.getElementById('year');
@@ -219,32 +246,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (e.key === 'Escape') closeModal();
             }
         });
-    }
-});
-
-// --- 導覽列底線偵錯版 ---
-document.addEventListener('DOMContentLoaded', () => {
-    const globalMarker = document.getElementById('nav-marker');
-    const activeNavItem = document.querySelector('.navbar .nav-links a.active');
-
-    // 打開瀏覽器 F12 檢查這兩行印出來的是元素還是 null
-    console.log("globalMarker 狀態:", globalMarker);
-    console.log("activeNavItem 狀態:", activeNavItem);
-
-    if (globalMarker && activeNavItem) {
-        const w = activeNavItem.offsetWidth;
-        const l = activeNavItem.offsetLeft;
-        console.log(`計算數值 -> 寬度: ${w}px, 座標: ${l}px`);
-
-        globalMarker.style.transition = 'none';
-        globalMarker.style.width = `${w}px`;
-        globalMarker.style.left = `${l}px`;
-
-        setTimeout(() => {
-            globalMarker.style.transition = '';
-        }, 50);
-    } else {
-        console.error("錯誤：找不到 #nav-marker 或 .navbar .nav-links a.active 元素！");
     }
 });
 
