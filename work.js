@@ -1,4 +1,44 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // --- 主導覽列 Home/Work 底線與互動效果 ---
+    const navMarker = document.getElementById('nav-marker');
+    const mainNavItems = document.querySelectorAll('.navbar .nav-links .nav-item');
+
+    if (navMarker && mainNavItems.length > 0) {
+        function updateMainMarker(element) {
+            navMarker.style.width = `${element.offsetWidth}px`;
+            navMarker.style.left = `${element.offsetLeft}px`;
+        }
+
+        // 1. 初始化：定位到目前頁面是 active 的項目 (Work)
+        const activeMainItem = document.querySelector('.navbar .nav-links .nav-item.active');
+        if (activeMainItem) {
+            navMarker.style.transition = 'none'; // 初始化時先關閉動畫，避免載入時亂飛
+            updateMainMarker(activeMainItem);
+            setTimeout(() => {
+                navMarker.style.transition = ''; // 恢復轉場動畫
+            }, 50);
+        }
+
+        // 2. 滑鼠懸停時底線跟著游標移動
+        mainNavItems.forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                updateMainMarker(item);
+            });
+            
+            // 3. 滑鼠移開後，底線回到當前頁面的 active 項目
+            item.addEventListener('mouseleave', () => {
+                if (activeMainItem) {
+                    updateMainMarker(activeMainItem);
+                }
+            });
+        });
+
+        // 4. 視窗大小改變時重新計算寬度與座標
+        window.addEventListener('resize', () => {
+            const currentActive = document.querySelector('.navbar .nav-links .nav-item.active');
+            if (currentActive) updateMainMarker(currentActive);
+        });
+    }
     
     // --- 1. Update Year (自動更新年份) ---
     const yearEl = document.getElementById('year');
