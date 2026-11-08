@@ -1,44 +1,59 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- 主導覽列 Home/Work 底線與互動效果 ---
-    const navMarker = document.getElementById('nav-marker');
-    const mainNavItems = document.querySelectorAll('.navbar .nav-links .nav-item');
+    // --- 1. 滑動底線邏輯 (Active Line) ---
+    const marker = document.getElementById('nav-marker');
+    const navLinks = document.querySelectorAll('.nav-links a');
 
-    if (navMarker && mainNavItems.length > 0) {
-        function updateMainMarker(element) {
-            navMarker.style.width = `${element.offsetWidth}px`;
-            navMarker.style.left = `${element.offsetLeft}px`;
-        }
-
-        // 1. 初始化：定位到目前頁面是 active 的項目 (Work)
-        const activeMainItem = document.querySelector('.navbar .nav-links .nav-item.active');
-        if (activeMainItem) {
-            navMarker.style.transition = 'none'; // 初始化時先關閉動畫，避免載入時亂飛
-            updateMainMarker(activeMainItem);
-            setTimeout(() => {
-                navMarker.style.transition = ''; // 恢復轉場動畫
-            }, 50);
-        }
-
-        // 2. 滑鼠懸停時底線跟著游標移動
-        mainNavItems.forEach(item => {
-            item.addEventListener('mouseenter', () => {
-                updateMainMarker(item);
-            });
-            
-            // 3. 滑鼠移開後，底線回到當前頁面的 active 項目
-            item.addEventListener('mouseleave', () => {
-                if (activeMainItem) {
-                    updateMainMarker(activeMainItem);
-                }
-            });
-        });
-
-        // 4. 視窗大小改變時重新計算寬度與座標
-        window.addEventListener('resize', () => {
-            const currentActive = document.querySelector('.navbar .nav-links .nav-item.active');
-            if (currentActive) updateMainMarker(currentActive);
-        });
+    function indicator(e) {
+        // e 是當前的 HTML 元素
+        marker.style.left = e.offsetLeft + "px";
+        marker.style.width = e.offsetWidth + "px";
     }
+
+    // 初始化：找到目前有 .active 的連結並移動線條
+    const activeLink = document.querySelector('.nav-links a.active');
+    if (activeLink && marker) {
+        indicator(activeLink);
+    }
+
+    // 點擊事件監聽
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            // 移除所有 active
+            navLinks.forEach(l => l.classList.remove('active'));
+            // 點擊的加上 active
+            e.currentTarget.classList.add('active');
+            // 移動線條
+            indicator(e.currentTarget);
+        });
+    });
+
+    // --- 2. Mobile Menu Logic ---
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const closeMenuBtn = document.getElementById('close-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+
+    function toggleMenu() {
+        const isOpen = mobileMenu.classList.toggle('open');
+        document.body.style.overflow = isOpen ? 'hidden' : ''; // 防止背景捲動
+    }
+
+    if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', toggleMenu);
+    if (closeMenuBtn) closeMenuBtn.addEventListener('click', toggleMenu);
+    
+    // 點擊手機版連結後，自動關閉選單
+    mobileLinks.forEach(link => {
+        link.addEventListener('click', toggleMenu);
+    });
+
+    // --- 3. (Optional) Resize 監聽 ---
+    // 當視窗大小改變時，重新計算底線位置 (因為文字可能會換行或間距改變)
+    window.addEventListener('resize', () => {
+        const currentActive = document.querySelector('.nav-links a.active');
+        if (currentActive && marker) {
+            indicator(currentActive);
+        }
+    });
     
     // --- 1. Update Year (自動更新年份) ---
     const yearEl = document.getElementById('year');
