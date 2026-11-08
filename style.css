@@ -314,7 +314,6 @@ hr {
     display: flex;
     align-items: center; /* 垂直置中對齊 */
     gap: 20px;          /* 圖片與右側文字的間距 */
-    margin: 16px 0;     /* 上下與標題、下方箭頭的距離 */
 }
 
 /* 左側圖片容器 */
