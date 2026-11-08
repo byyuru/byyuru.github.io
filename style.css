@@ -325,9 +325,9 @@ hr {
 .card-image img {
     width: 100%;
     height: auto;
-    aspect-ratio: 4 / 3; /* 維持固定的圖片比例，可改為 1 / 1 變正方形 */
-    object-fit: cover;
-    border-radius: 12px; /* 圖片圓角，讓視覺更協調 */
+    aspect-ratio: unset; /* 取消固定比例 */
+    object-fit: contain; /* 改為 contain 完整呈現 */
+    border-radius: 12px;
     display: block;
 }
 
