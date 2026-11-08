@@ -200,9 +200,9 @@ p {
 
 .service-sub {
     font-size: 0.875rem; /* 讓小字比主標題小一點 (約 14px) */
-    color: var(--gray-dark); /* 使用你原本設定的次要文字顏色 */
+    color: var(--gray-medium); /* 使用你原本設定的次要文字顏色 */
     font-weight: 400;
-    letter-spacing: -0.01em;
+    /* letter-spacing: -0.01em; */
 }
 
 .service-item:hover .service-name {
