@@ -222,42 +222,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// --- 6. 全域導覽列底線定位 (Navbar Marker) ---
+// --- 導覽列底線偵錯版 ---
 document.addEventListener('DOMContentLoaded', () => {
     const globalMarker = document.getElementById('nav-marker');
     const activeNavItem = document.querySelector('.navbar .nav-links a.active');
 
-    if (globalMarker && activeNavItem) {
-        // 初始化：設定底線寬度與位置對齊當前頁面 (Work)
-        globalMarker.style.transition = 'none';
-        globalMarker.style.width = `${activeNavItem.offsetWidth}px`;
-        globalMarker.style.left = `${activeNavItem.offsetLeft}px`;
+    // 打開瀏覽器 F12 檢查這兩行印出來的是元素還是 null
+    console.log("globalMarker 狀態:", globalMarker);
+    console.log("activeNavItem 狀態:", activeNavItem);
 
-        // 恢復轉場動畫
+    if (globalMarker && activeNavItem) {
+        const w = activeNavItem.offsetWidth;
+        const l = activeNavItem.offsetLeft;
+        console.log(`計算數值 -> 寬度: ${w}px, 座標: ${l}px`);
+
+        globalMarker.style.transition = 'none';
+        globalMarker.style.width = `${w}px`;
+        globalMarker.style.left = `${l}px`;
+
         setTimeout(() => {
             globalMarker.style.transition = '';
         }, 50);
-
-        // 滑鼠移入其他連結時，底線移動到該連結
-        const navLinks = document.querySelectorAll('.navbar .nav-links a');
-        navLinks.forEach(link => {
-            link.addEventListener('mouseenter', () => {
-                globalMarker.style.width = `${link.offsetWidth}px`;
-                globalMarker.style.left = `${link.offsetLeft}px`;
-            });
-
-            // 滑鼠移開後，底線回到目前作用中的頁面 (Work)
-            link.addEventListener('mouseleave', () => {
-                globalMarker.style.width = `${activeNavItem.offsetWidth}px`;
-                globalMarker.style.left = `${activeNavItem.offsetLeft}px`;
-            });
-        });
-
-        // 視窗大小改變時重新計算位置
-        window.addEventListener('resize', () => {
-            globalMarker.style.width = `${activeNavItem.offsetWidth}px`;
-            globalMarker.style.left = `${activeNavItem.offsetLeft}px`;
-        });
+    } else {
+        console.error("錯誤：找不到 #nav-marker 或 .navbar .nav-links a.active 元素！");
     }
 });
 
