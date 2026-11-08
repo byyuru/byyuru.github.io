@@ -337,8 +337,10 @@ hr {
 
 /* 右下側分組 */
 .bottom-right-group {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* 保持兩欄，四格會自動排成 2x2 */
+    display: flex;
+    flex-direction: column;
+    /* display: grid;
+    grid-template-columns: 1fr 1fr; */ /* 保持兩欄，四格會自動排成 2x2 */
     gap: var(--gap);
 }
 
