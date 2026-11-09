@@ -396,6 +396,7 @@ hr {
 .img-content {
     width: fit-content;
     height: auto;
+    border-radius: 12px;
 }
 
 .img-content img {
