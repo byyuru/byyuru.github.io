@@ -320,7 +320,7 @@ hr {
 .card-image {
     flex: 0 0 140px;      /* 增加圖片區域的基礎寬度（原本可能較小） */
     max-width: 150px;     /* 放大最大寬度限制（原本是 120px） */
-    height: 90px;         /* 鎖定高度，確保不會隨圖片變大而撐開卡片 */
+    height: 180px;         /* 鎖定高度，確保不會隨圖片變大而撐開卡片 */
 }
 
 .card-image img {
@@ -329,6 +329,8 @@ hr {
     object-fit: cover;    /* 保持比例填滿，或改用 contain 完整顯示圖片 */
     border-radius: 12px;
     display: block;
+    object-position: top;
+    aspect-ratio: 4 / 3;
 }
 /* .card-image {
     flex: 0 0 48%;
@@ -395,13 +397,13 @@ hr {
 .img-content {
     width: fit-content;
     height: auto;
-    border-radius: 12px;
 }
 
 .img-content img {
     width: 100%;
     aspect-ratio: 4 / 3;
     object-fit: cover;
+    border-radius: 12px;
 }
 
 /* 右上側指令面板 */
